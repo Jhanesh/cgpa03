@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CGPA Calculator</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f4f4f4;
+    }
+    .container {
+        max-width: 400px;
+        margin: auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    input[type="text"], input[type="number"] {
+        width: calc(100% - 20px);
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+    button {
+        padding: 10px;
+        width: 100%;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+    #result {
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h2>CGPA Calculator</h2>
+    <form id="cgpaForm">
+        <label for="studentName">Student Name:</label>
+        <input type="text" id="studentName" placeholder="Enter Student Name" required>
+        
+        <label for="regNumber">Register Number:</label>
+        <input type="text" id="regNumber" placeholder="Enter Register Number" required>
+        
+        <label for="numSubjects">Number of Pass Subjects (max 30):</label>
+        <input type="number" id="numSubjects" placeholder="Number of Subjects" min="1" max="30" required>
+        
+        <label for="gradeS">Number of 'S' Grades:</label>
+        <input type="number" id="gradeS" placeholder="Number of 'S' Grades" min="0" required>
+        
+        <label for="gradeA">Number of 'A' Grades:</label>
+        <input type="number" id="gradeA" placeholder="Number of 'A' Grades" min="0" required>
+        
+        <label for="gradeB">Number of 'B' Grades:</label>
+        <input type="number" id="gradeB" placeholder="Number of 'B' Grades" min="0" required>
+        
+        <label for="gradeC">Number of 'C' Grades:</label>
+        <input type="number" id="gradeC" placeholder="Number of 'C' Grades" min="0" required>
+        
+        <label for="gradeD">Number of 'D' Grades:</label>
+        <input type="number" id="gradeD" placeholder="Number of 'D' Grades" min="0" required>
+        
+        <label for="gradeE">Number of 'E' Grades:</label>
+        <input type="number" id="gradeE" placeholder="Number of 'E' Grades" min="0" required>
+        
+        <button type="submit">Calculate CGPA</button>
+    </form>
+    <div id="result"></div>
+</div>
+
+<script>
+    document.getElementById('cgpaForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent form submission
+        
+        var studentName = document.getElementById('studentName').value;
+        var regNumber = document.getElementById('regNumber').value;
+        var numSubjects = parseInt(document.getElementById('numSubjects').value);
+        var gradeS = parseInt(document.getElementById('gradeS').value);
+        var gradeA = parseInt(document.getElementById('gradeA').value);
+        var gradeB = parseInt(document.getElementById('gradeB').value);
+        var gradeC = parseInt(document.getElementById('gradeC').value);
+        var gradeD = parseInt(document.getElementById('gradeD').value);
+        var gradeE = parseInt(document.getElementById('gradeE').value);
+        
+        var totalCredits = numSubjects * 4; // Assuming each subject carries 4 credits
+        var totalGradePoints = gradeS * 10 + gradeA * 9 + gradeB * 8 + gradeC * 7 + gradeD * 6 + gradeE * 5;
+        var totalSubjects = gradeS + gradeA + gradeB + gradeC + gradeD + gradeE;
+        var cgpa = totalSubjects > 0 ? totalGradePoints / totalSubjects : 0;
+        var remainingSubjects = 30 - numSubjects;
+        var completedSubjects = numSubjects;
+        var remainingCredits = 120 - totalCredits;
+        
+        var resultHTML = "<h3>CGPA Result</h3>";
+        resultHTML += "<p>Student Name: " + studentName + "</p>";
+        resultHTML += "<p>Register Number: " + regNumber + "</p>";
+        resultHTML += "<p>CGPA: " + cgpa.toFixed(2) + "</p>";
+        resultHTML += "<p>Total Credits: " + totalCredits + " out of 120</p>";
+        resultHTML += "<p>Remaining Subjects Pending: " + remainingSubjects + "</p>";
+        resultHTML += "<p>Number of Completed Subjects: " + completedSubjects + "</p>";
+        resultHTML += "<p>Remaining Credits out of 120: " + remainingCredits + "</p>";
+        
+        document.getElementById('result').innerHTML = resultHTML;
+    });
+</script>
+</body>
+</html>
